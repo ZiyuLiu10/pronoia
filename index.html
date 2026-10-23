@@ -29,6 +29,9 @@
 /* True product photography and a browsable, paginated atlas. */
 .perfume-visual{background:#f7f7f4!important}.perfume-visual:before{display:none}.product-photo{display:block;max-width:100%;object-fit:contain;mix-blend-mode:multiply}.perfume-visual .product-photo{width:80%;height:180px;margin-top:25px;transition:transform .3s}.perfume-card:hover .product-photo{transform:translateY(-3px)}.rank-label{z-index:1}.owned-badge{z-index:1;background:#fffdf4dd}.detail-image{background:#f7f7f4!important}.detail-image .product-photo{height:180px;width:100%}.layer-art .product-photo{width:47%;height:160px;object-fit:contain;margin:0;transform:rotate(-8deg)}.layer-art .product-photo+.product-photo{transform:rotate(8deg);margin-top:28px}.photo-placeholder{min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#89837a}.photo-placeholder span{font-size:55px;font-weight:200}.photo-placeholder small{font-size:8px;letter-spacing:1.5px}.catalog-pagination{display:flex;align-items:center;justify-content:center;gap:24px;margin:36px 0;font-size:12px}.catalog-pagination button:disabled{opacity:.35;cursor:default}.catalog-search-more{display:flex;justify-content:center;align-items:center;gap:20px;padding:28px 0;font-size:12px;border-top:1px solid #dedbd4}.footer-edition{font-size:8px;letter-spacing:1.7px;color:#99928a}.lookup-form{display:flex;gap:12px;align-items:end;margin:24px 0 12px}.lookup-form .field{flex:1;margin:0}.lookup-form .primary-button{flex:none;width:auto;margin:0;min-height:44px}.lookup-result{display:grid;grid-template-columns:110px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid #e4e1da}.lookup-result h3{font-family:Georgia,serif;font-size:22px;margin:7px 0}.lookup-result p{margin:4px 0;font-size:11px}.lookup-result small{display:block;font-size:10px;color:#847d73;line-height:1.7;margin:8px 0}.lookup-image{align-self:start;background:#f8f7f3;border-radius:10px;padding:7px}.lookup-image .product-photo{height:145px;width:100%}.lookup-result .source-link{display:block;font-size:10px;margin-bottom:12px}.lookup-result button{font-size:11px}.lookup-result button:disabled{opacity:.5}.lookup-coverage{margin-top:24px;font-size:11px;line-height:1.9;color:#847d73}.lookup-coverage summary{cursor:pointer}.lookup-footer{margin-top:20px;padding-top:16px;border-top:1px solid #e4e1da}.lookup-footer .text-button{padding:8px 0}#lookup-status{min-height:22px;line-height:1.8}#lookup-dialog{max-width:650px}#lookup-dialog h2{font-size:30px}html[lang=en] .catalog-search-more{font-size:11px}@media(max-width:600px){.lookup-result{grid-template-columns:78px 1fr;gap:14px}.lookup-image .product-photo{height:112px}.lookup-result h3{font-size:19px}.lookup-form{flex-wrap:wrap}.lookup-form .field{flex-basis:100%}.catalog-search-more{flex-direction:column;gap:12px}.catalog-pagination{gap:14px}.catalog-pagination button{font-size:10px;padding:10px 12px}.perfume-visual .product-photo{height:190px}.layer-art .product-photo{height:155px;width:40%}}@media(prefers-reduced-motion:reduce){.perfume-visual .product-photo{transition:none}}
 
+/* Personal feelings retain the nacre surface and wrap without truncating labels. */
+.feelings-fieldset{min-width:0;margin:22px 0 0;padding:0;border:0}.feelings-fieldset legend{width:100%;padding:0;margin:0 0 13px}.feelings-fieldset .choice-chips{margin-bottom:18px;gap:8px}.feelings-fieldset .chip span{min-height:35px;display:flex;align-items:center;padding:7px 13px}.feelings-fieldset .chip input:checked+span{color:#454b40;box-shadow:inset 0 0 0 1px #92978370,0 2px 8px #c9c4cf25}.custom-feeling-field{position:relative;display:block}.feeling-optional{float:right;font-size:10px;color:#85877c;font-weight:400}.field textarea{display:block;width:100%;margin-top:8px;padding:12px 13px;min-height:82px;resize:vertical;border:1px solid transparent;border-radius:3px;background:linear-gradient(#fafaf7ee,#fafaf7ee) padding-box,var(--nacre) border-box;font:13px/1.7 var(--sans);color:var(--ink)}.field textarea::placeholder{color:#94968b}.field textarea:focus-visible{outline:2px solid #82788e;outline-offset:3px}.feelings-fieldset .field-help{margin:8px 0 0}.feeling-feedback{font-size:11px;line-height:1.8;margin:7px 0 16px;color:#68745e;overflow-wrap:anywhere}.feeling-feedback:empty{display:none}@media(max-width:580px){.feelings-fieldset legend{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.feelings-fieldset .choice-chips{gap:7px}.feelings-fieldset .chip span{padding:7px 12px;font-size:11px;min-height:36px}.field textarea{font-size:16px}.feeling-feedback{font-size:11px}}
+
 </style>
 
 </head>
@@ -60,7 +63,10 @@
      <details class="birth-details"><summary>补全出生时间与地点 <span>计算月亮与上升 ↗</span></summary><div class="field-row"><label class="field">出生时间（可留空）<input id="birth-time" type="time"></label><label class="field">出生地点<select id="birth-city"><option value="shanghai">上海</option><option value="beijing">北京</option><option value="guangzhou">广州</option><option value="chengdu">成都</option><option value="hongkong">香港</option><option value="taipei">台北</option><option value="newyork">纽约</option><option value="london">伦敦</option><option value="custom">手动填写经纬度</option></select></label></div><div class="field-row"><label class="field">纬度（北正南负）<input id="birth-lat" type="number" min="-89.9" max="89.9" step="any" value="31.2304"></label><label class="field">经度（东正西负）<input id="birth-lon" type="number" min="-180" max="180" step="any" value="121.4737"></label></div><p class="field-help">地点仅提供坐标，不自动判断历史夏令时；请核对出生当日的 UTC 时差。留空时间只计算太阳。</p></details>
      <div id="goal-fields" class="hidden"><div class="field-row"><label class="field">我正在努力的方向<select id="goal"><option value="startup">创业 / 事业新阶段</option><option value="growth">学习 / 个人成长</option><option value="relationship">建立关系 / 恋爱</option><option value="reset">重新找回状态</option><option value="custom">自定义目标</option></select></label><label class="field">希望实现的日期<input id="goal-date" type="date"></label></div><label class="field optional-field">写得更具体一点 <span>选填</span><input id="goal-text" maxlength="120" placeholder="例如：推进一个新项目，让想法成为现实"></label></div>
      <div id="event-fields" class="hidden"><div class="field-row"><label class="field">那天要做的事<select id="event"><option value="interview">面试 / 交流</option><option value="client">客户面谈</option><option value="date">约会 / 见喜欢的人</option><option value="presentation">演讲 / 路演</option><option value="study">写作 / 深度学习</option><option value="creative">创作 / 自由探索</option><option value="social">聚会 / 社交</option><option value="custom">其他重要的事</option></select></label><label class="field">重要日程<input id="event-date" type="date"></label></div><label class="field optional-field">当天的具体安排 <span>选填</span><input id="event-text" maxlength="120" placeholder="例如：和导师第一次视频面谈"></label></div>
-     <div class="preference-label">我偏爱的感觉 <span>可多选；会直接影响排序</span></div><div id="likes" class="choice-chips"></div>
+     <fieldset class="feelings-fieldset"><legend class="preference-label">我偏爱的感觉 <span>24 种感觉 · 可多选</span></legend><div id="likes" class="choice-chips"></div>
+      <label class="field custom-feeling-field" for="feeling-text">写下你自己的感觉 <span class="feeling-optional">选填</span><textarea id="feeling-text" rows="2" maxlength="160" placeholder="例如：松弛一点，温柔但有力量" aria-describedby="feeling-help feeling-feedback"></textarea></label>
+      <p id="feeling-help" class="field-help">可以组合多种感觉。自填描述中识别到的感觉词，也会一起参与推荐。</p><p id="feeling-feedback" class="feeling-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+     </fieldset>
      <details class="preference-details"><summary>更多偏好与筛选 <span>浓度感 / 避开香调</span></summary><div class="field-row"><label class="field">可接受的气味存在感<select id="max-intensity"><option value="3">不限</option><option value="2" selected>轻盈到适中</option><option value="1">尽量轻盈</option></select></label><label class="field">自定义目标的核心感觉<select id="intention"></select></label></div><label class="field">不喜欢的香调 <input id="exclude" placeholder="如：玫瑰、香草，用逗号分隔" maxlength="160"></label><p class="field-help">按公开香调排除，无法据此排查过敏原。强度为编辑估计，受用量和皮肤影响。</p><label class="switch-label"><input id="use-astro" type="checkbox" checked><span class="switch"></span> 加入星盘象征偏好</label></details>
      <div class="form-switches"><label class="switch-label"><input id="owned-only" type="checkbox"><span class="switch"></span> 只从我的香水柜选择</label><label class="switch-label"><input id="allow-layer" type="checkbox" checked><span class="switch"></span> 探索两款叠喷</label></div>
      <div id="form-error" role="alert" class="form-error hidden"></div>
@@ -436,6 +442,10 @@ window.PRONOIA_STATIC_EN = {
   "当天的具体安排": "A little about the day",
   "例如：和导师第一次视频面谈": "e.g. My first video meeting with a potential supervisor",
   "我偏爱的感觉": "The feelings I gravitate toward",
+  "24 种感觉 · 可多选": "24 feelings · choose as many as you like",
+  "写下你自己的感觉": "Describe your own feeling",
+  "例如：松弛一点，温柔但有力量": "e.g. Relaxed, gentle but confident",
+  "可以组合多种感觉。自填描述中识别到的感觉词，也会一起参与推荐。": "Mix any feelings you like. Recognised keywords in your description also shape your recommendations.",
   "可多选；会直接影响排序": "Choose any; these shape your ranking",
   "更多偏好与筛选": "More preferences & filters",
   "浓度感 / 避开香调": "Presence / notes to avoid",
@@ -516,6 +526,45 @@ window.PRONOIA_STATIC_EN['核对下一款 ↗']='Review next fragrance ↗';
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.ScentCore=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
 const TAGS={focus:'专注',calm:'安定',confidence:'自信',connection:'亲和',energy:'活力',creativity:'灵感'};
+// Feelings blend the existing six editorial axes; catalogue tags keep their original meaning.
+const FEELINGS={
+ focus:{zh:'专注',en:'Focused',vector:[1,0,0,0,0,0],words:'专注|集中|focus(?:ed)?|concentrat(?:e|ed|ion)'},
+ calm:{zh:'安定',en:'Calm',vector:[0,1,0,0,0,0],words:'安定|安心|平静|宁静|calm|peaceful|tranquil'},
+ confidence:{zh:'自信',en:'Confident',vector:[0,0,1,0,0,0],words:'自信|有力量|底气|confiden(?:t|ce)|empowered'},
+ connection:{zh:'亲和',en:'Approachable',vector:[0,0,0,1,0,0],words:'亲和|亲切|友善|approachable|friendly|welcoming'},
+ energy:{zh:'活力',en:'Energised',vector:[0,0,0,0,1,0],words:'活力|元气|精神饱满|energi[sz]ed|energetic|vibrant'},
+ creativity:{zh:'灵感',en:'Inspired',vector:[0,0,0,0,0,1],words:'灵感|创造力|inspir(?:ed|ation)|creative'},
+ relaxed:{zh:'松弛',en:'Relaxed',vector:[0,1,0,.25,.1,.15],words:'松弛|放松|自在|relax(?:ed|ing)?|laid.back|at ease'},
+ joyful:{zh:'愉悦',en:'Joyful',vector:[0,.2,.15,.5,1,.2],words:'愉悦|快乐|开心|joyful|happy|cheerful'},
+ romantic:{zh:'浪漫',en:'Romantic',vector:[0,.25,.15,1,.1,.55],words:'浪漫|心动|romantic|romance'},
+ gentle:{zh:'温柔',en:'Gentle',vector:[0,.7,0,1,0,.2],words:'温柔|柔和|柔软|gentle|soft|tender'},
+ clear:{zh:'清醒',en:'Clear-minded',vector:[1,.35,.1,0,.55,.1],words:'清醒|清晰|清明|clear.minded|clarity|alert'},
+ brave:{zh:'勇敢',en:'Brave',vector:[.3,0,1,.1,.7,.2],words:'勇敢|勇气|大胆|brave|courage(?:ous)?|bold'},
+ free:{zh:'自由',en:'Free-spirited',vector:[0,.15,.35,.15,.6,1],words:'自由|无拘无束|洒脱|free.spirited|freedom|carefree'},
+ mysterious:{zh:'神秘',en:'Mysterious',vector:[.25,.35,.65,.1,0,1],words:'神秘|深邃|mysterious|enigmatic'},
+ elegant:{zh:'优雅',en:'Elegant',vector:[.45,.4,.85,.65,0,.15],words:'优雅|高级|知性|elegant|refined|sophisticated'},
+ grounded:{zh:'沉稳',en:'Grounded',vector:[.65,1,.6,0,0,.1],words:'沉稳|稳重|踏实|grounded|steady|composed'},
+ comforting:{zh:'治愈',en:'Comforting',vector:[.1,1,0,.7,0,.1],words:'治愈|慰藉|被拥抱|comfort(?:ing)?|cosy|cozy|reassuring'},
+ fresh:{zh:'清新',en:'Fresh',vector:[.55,.35,0,.2,1,.2],words:'清新|清爽|干净|fresh|clean|crisp'},
+ sensual:{zh:'性感',en:'Sensual',vector:[0,.15,1,.85,.2,.25],words:'性感|妩媚|撩人|sensual|sexy|seductive'},
+ playful:{zh:'俏皮',en:'Playful',vector:[0,0,.35,.75,1,.7],words:'俏皮|灵动|可爱|playful|whimsical|cute'},
+ independent:{zh:'独立',en:'Independent',vector:[.7,.15,1,0,.2,.55],words:'独立|做自己|自主|independent|self.assured|individual'},
+ balanced:{zh:'平衡',en:'Balanced',vector:[.5,1,.35,.5,.15,.25],words:'平衡|和谐|balanced|harmony|harmonious'},
+ hopeful:{zh:'希望',en:'Hopeful',vector:[.15,.3,.65,.2,.75,1],words:'希望|期待|乐观|hopeful|optimistic|optimism'},
+ warm:{zh:'温暖',en:'Warm',vector:[0,.8,.15,1,.25,0],words:'温暖|暖意|暖暖|warm|warmth'}
+};
+function parseFeelings(text=''){
+ // Explicit keyword matching, not an open-ended language model. Ignore negated clauses.
+ const clauses=String(text).slice(0,160).split(/[，,。.;；!?！？\n]|但是|不过|但|而是|\bbut\b|\binstead\b/i);
+ const positive=clauses.filter(s=>!/(?:不要|不想|不喜欢|不需要|不太|不够|不再|避免|拒绝|没有|缺少|并非|不必|不求|非要|^\s*不|\b(?:not|no|without|avoid|less)\b|don['’]?t)/i.test(s));
+ return Object.entries(FEELINGS).filter(([,f])=>positive.some(s=>new RegExp('(?:^|[^a-z])(?:'+f.words+')(?![a-z])','i').test(s))).map(([id])=>id);
+}
+function preferenceVector(likes=[],text=''){
+ const ids=[...new Set([...(Array.isArray(likes)?likes:[]),...parseFeelings(text)])].filter(id=>Object.hasOwn(FEELINGS,id));
+ if(!ids.length)return null;
+ // Each selected feeling contributes equally, even when its blend has more dimensions.
+ return ids.reduce((v,id)=>{const a=FEELINGS[id].vector,total=a.reduce((s,x)=>s+x,0);return v.map((x,i)=>x+a[i]/total/ids.length);},[0,0,0,0,0,0]);
+}
 const SIGNS=['白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手','摩羯','水瓶','双鱼'];
 const GLYPHS=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 const ELEMENTS=['火','土','风','水'];
@@ -574,7 +623,7 @@ function scorePerfume(p,ctx){
  const v=profile(p),weights={...WEIGHTS[ctx.level||1]};if(!ctx.useAstro||ctx.chart.uncertain)weights.astro=0;
  const total=Object.values(weights).reduce((a,b)=>a+b,0);Object.keys(weights).forEach(k=>weights[k]/=total);
  const goalKey=classifyText(ctx.goalText,ctx.goal||'growth','goal'),eventKey=classifyText(ctx.eventText,ctx.event||'client','event');
- const liked=ctx.likes||[];let pref=liked.length?liked.reduce((s,t)=>s+(v[Object.keys(TAGS).indexOf(t)]||0),0)/liked.length:.6;
+ const preference=preferenceVector(ctx.likes,ctx.feelingText);let pref=preference?affinity(v,preference):.6;
  if((ctx.loved||[]).includes(p.id))pref=clamp(pref+.15);
  const parts={astro:affinity(v,astroVector(ctx.chart)),goal:affinity(v,intentVector(goalKey,GOALS,ctx.intention)),event:affinity(v,intentVector(eventKey,EVENTS,ctx.intention)),preference:pref};
  const score=100*Object.keys(weights).reduce((s,k)=>s+weights[k]*parts[k],0);
@@ -606,7 +655,7 @@ function layering(ranked,ctx){
  }
  return best;
 }
-return {TAGS,SIGNS,GLYPHS,ELEMENTS,ELEMENT_VECTORS,GOALS,EVENTS,WEIGHTS,NOTE_RULES,sign,birthChart,allNotes,profile,astroVector,affinity,classifyText,scorePerfume,rank,layering};
+return {TAGS,FEELINGS,parseFeelings,preferenceVector,SIGNS,GLYPHS,ELEMENTS,ELEMENT_VECTORS,GOALS,EVENTS,WEIGHTS,NOTE_RULES,sign,birthChart,allNotes,profile,astroVector,affinity,classifyText,scorePerfume,rank,layering};
 });
 
 </script>
@@ -738,7 +787,11 @@ function publicCatalog(){return [...new Map([...DB,...state.imported].map(p=>[p.
 function catalog(){return [...publicCatalog(),...state.custom];}
 function findPerfume(id){return catalog().find(p=>p.id===id);}
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),4000);}
-function chips(id,name,selected=[]){$(id).innerHTML=Object.keys(C.TAGS).map(v=>`<label class="chip"><input type="checkbox" name="${name}" value="${v}" ${selected.includes(v)?'checked':''}><span>${tag(v)}</span></label>`).join('');}
+function chips(id,name,selected=[]){const feelings=name==='likes';$(id).innerHTML=Object.keys(feelings?C.FEELINGS:C.TAGS).map(v=>`<label class="chip"><input type="checkbox" name="${name}" value="${v}" ${selected.includes(v)?'checked':''}><span>${feelings?tr(C.FEELINGS[v].zh,C.FEELINGS[v].en):tag(v)}</span></label>`).join('');}
+function renderFeelingFeedback(){
+ const value=$('feeling-text').value.trim(),ids=C.parseFeelings(value);
+ $('feeling-feedback').textContent=!value?'':ids.length?tr('会参考这些感觉：','Feelings included: ')+ids.map(id=>tr(C.FEELINGS[id].zh,C.FEELINGS[id].en)).join(' · '):tr('还没有识别到感觉词。可以试试「松弛、优雅、温柔」等表达。','No feeling keywords recognised yet. Try “relaxed”, “elegant” or “gentle”.');
+}
 function checked(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value);}
 function palette(p){const s=p.id.split('').reduce((a,c)=>a+c.charCodeAt(0),0);return [['#eae9e3','#e8d8bc','#74766f'],['#e6e8e5','#c8cfc2','#676c64'],['#ece7e8','#dfc9d0','#8c8284'],['#e5e8eb','#cbd1dd','#737b87'],['#ede9e1','#dcccac','#8a8275']][s%5];}
 function bottle(p){const src=window.PRONOIA_IMAGES?.[p.id]||p.imagePath||p.imageSourceUrl;const valid=src&&(/^(?:https:\/\/|data:image\/(?:png|jpeg|webp);base64,|assets\/products\/)/i.test(src));return valid?`<img class="product-photo" src="${esc(src)}" alt="${esc(p.brand+' '+p.name+' '+p.concentration)}" loading="lazy" decoding="async">`:`<div class="photo-placeholder"><span aria-hidden="true">◌</span><small>${tr('个人香气记录','PERSONAL SCENT')}</small></div>`;}
@@ -749,7 +802,7 @@ function makeContext(){
  const chart=C.birthChart({date:$('birth-date').value,time:$('birth-time').value,offset,lat:$('birth-lat').value,lon:$('birth-lon').value},window.Astronomy);
  if(level>=2&&!$('goal-date').value)throw Error(tr('请填写阶段性目标的日期。','Please choose a date for your intention.'));
  if(level===3&&!$('event-date').value)throw Error(tr('请填写重要日程的日期。','Please choose a date for your occasion.'));
- return {level,chart,demo,useAstro:$('use-astro').checked,goal:$('goal').value,goalText:$('goal-text').value.trim(),goalDate:$('goal-date').value,event:$('event').value,eventText:$('event-text').value.trim(),eventDate:$('event-date').value,intention:$('intention').value,likes:checked('likes'),maxIntensity:Number($('max-intensity').value),exclude:$('exclude').value,noteAliases,ownedOnly:$('owned-only').checked,allowLayer:$('allow-layer').checked,owned:[...state.owned],loved:[...state.loved]};
+ return {level,chart,demo,useAstro:$('use-astro').checked,goal:$('goal').value,goalText:$('goal-text').value.trim(),goalDate:$('goal-date').value,event:$('event').value,eventText:$('event-text').value.trim(),eventDate:$('event-date').value,intention:$('intention').value,likes:checked('likes'),feelingText:$('feeling-text').value.trim(),maxIntensity:Number($('max-intensity').value),exclude:$('exclude').value,noteAliases,ownedOnly:$('owned-only').checked,allowLayer:$('allow-layer').checked,owned:[...state.owned],loved:[...state.loved]};
 }
 function errorText(s){if(lang==='zh')return s;const map={'星位计算模块未加载，请刷新页面。':'The astronomy module did not load. Please refresh.','请填写出生年月日。':'Please enter your date of birth.','请填写 1900 年至今天之间的有效出生日期。':'Enter a valid date of birth between 1900 and today.','出生时间格式应为 HH:MM':'Use HH:MM for the birth time.','出生时间无效':'Please enter a valid birth time.'};if(map[s])return map[s];if(s.includes('超出有效范围'))return 'Check the UTC offset (−12 to +14), latitude (−89.9 to +89.9), and longitude (−180 to +180).';return s;}
 function calculate(scroll=false){try{const ctx=makeContext(),results=C.rank(catalog(),ctx);current={ctx,results,layer:C.layering(results.ranked,ctx)};dirty=false;$('form-error').classList.add('hidden');renderResults();document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(scroll)$('results').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}catch(e){$('form-error').textContent=errorText(e.message);$('form-error').classList.remove('hidden');if(scroll)$('form-error').scrollIntoView({block:'center',behavior:'smooth'});}}
@@ -799,13 +852,14 @@ function refreshOptions(){
  $('family-filter').innerHTML=`<option value="">${tr('所有感觉','All moods')}</option>`+Object.keys(C.TAGS).map(k=>`<option value="${k}">${tag(k)}</option>`).join('');$('family-filter').value=family;
  $('catalog-description').textContent=tr(`${new Set(publicCatalog().map(p=>p.brand)).size} 个品牌，${publicCatalog().length} 款代表香气。每一缕灵感，都有可追溯的出处。`,`${publicCatalog().length} distinctive scents from ${new Set(publicCatalog().map(p=>p.brand)).size} houses. Inspiration, with a source for every note.`);
 }
-function switchLanguage(next){if(!['zh','en'].includes(next)||lang===next)return;lang=next;try{localStorage.setItem('pronoia-language',lang);}catch{}translateStatic();chips('likes','likes',checked('likes'));chips('custom-tags','customTags',checked('customTags'));refreshOptions();if(current){renderResults();}if(dirty)showDirty();else document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(!$('form-error').classList.contains('hidden'))$('form-error').textContent=tr('请核对出生资料与日期后再次提交。','Please check the birth details and dates, then submit again.');$('custom-error').textContent='';navigate(currentView,false);if($('detail-dialog').open)openDetails(detailId);if($('lookup-dialog').open)PronoiaOnline.refresh();$('toast').classList.remove('show');}
+function switchLanguage(next){if(!['zh','en'].includes(next)||lang===next)return;lang=next;try{localStorage.setItem('pronoia-language',lang);}catch{}translateStatic();chips('likes','likes',checked('likes'));renderFeelingFeedback();chips('custom-tags','customTags',checked('customTags'));refreshOptions();if(current){renderResults();}if(dirty)showDirty();else document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(!$('form-error').classList.contains('hidden'))$('form-error').textContent=tr('请核对出生资料与日期后再次提交。','Please check the birth details and dates, then submit again.');$('custom-error').textContent='';navigate(currentView,false);if($('detail-dialog').open)openDetails(detailId);if($('lookup-dialog').open)PronoiaOnline.refresh();$('toast').classList.remove('show');}
 function setup(){
  captureStatic();translateStatic();$('birth-date').max=today;$('event-date').value=today;const future=new Date();future.setDate(future.getDate()+90);$('goal-date').value=localDate(future);chips('likes','likes',['focus','calm']);refreshOptions();
  $('begin-ritual').addEventListener('click',()=>{$('ritual-workspace').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});$('birth-date').focus({preventScroll:true});});
  document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>switchLanguage(b.dataset.lang)));
  $('recommend-form').addEventListener('submit',e=>{e.preventDefault();calculate(true);});
  $('recommend-form').addEventListener('input',()=>{dirty=true;showDirty();});
+ $('feeling-text').addEventListener('input',renderFeelingFeedback);
  document.querySelectorAll('input[name="level"]').forEach(el=>el.addEventListener('change',()=>{const n=Number(el.value);$('goal-fields').classList.toggle('hidden',n<2);$('event-fields').classList.toggle('hidden',n<3);}));
  $('utc-offset').addEventListener('change',()=>$('offset-custom-field').classList.toggle('hidden',$('utc-offset').value!=='custom'));
  $('birth-date').addEventListener('change',()=>{demo=false;$('demo-banner').classList.add('hidden');});

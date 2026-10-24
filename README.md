@@ -8,6 +8,7 @@ A bilingual astrology-based fragrance website with a mother-of-pearl interface a
 
 - 200 real perfumes across 16 brands, with product photographs and official note sources; verified online additions extend the atlas.
 - Three modes: a natal signature scent, a longer-term intention, or a particular occasion.
+- Male, female and unisex scent-direction choices, with bilingual labels and brand-source positioning. This lightly adjusts ranking while preserving chart calculations and individual preferences.
 - 24 selectable feelings plus a custom description, with Chinese/English keyword matching.
 - Actual tropical planetary positions, seven traditional planets, chart ruler, whole-sign houses, major aspects and reference-time transits participate in scent ranking.
 - Natal temperament and contextual support needs are evaluated separately, including dignity, retrograde motion, solar distance, angular houses, domicile reception and hard versus flowing aspects. Support resources must have an actual natal connection; a missing element is not automatically prescribed.
@@ -23,6 +24,6 @@ Birth details, feelings and personal plans are processed in the visitor’s brow
 
 `index.html` is the complete standalone website, including code, data, artwork and 200 product images. GitHub Pages serves it from `main` / root.
 
-[`pronoia-source.zip`](pronoia-source.zip) contains modular HTML/CSS/JavaScript, research, image credits and 42 tests. No frontend build step or secret API key is needed. Run `node --test tests/*.test.cjs` in the extracted source directory.
+[`pronoia-source.zip`](pronoia-source.zip) contains modular HTML/CSS/JavaScript, research, image credits and 45 tests. No frontend build step or secret API key is needed. Run `node --test tests/*.test.cjs` in the extracted source directory.
 
 Code: MIT. Product photography, brand logos and trademarks retain their original rights and are excluded from the code license. Per-image sources are in `data/image-credits.json`.

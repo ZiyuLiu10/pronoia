@@ -33,3 +33,9 @@ Code: MIT. Product photography, brand logos and trademarks retain their original
 Search cities worldwide in Chinese or English, distinguish places by region and country, and open the chosen city on Google Maps. Coordinates are handled internally; there are no coordinate input fields. In-page search uses Open-Meteo / GeoNames, not Google Places. Only the city query is sent to the search service. Birth date and time stay in the browser. Check the historical UTC offset and daylight saving time for the birth date. Editing the city text invalidates the previous selection. A full chart requires choosing a result.
 
 The free geocoding endpoint is for non-commercial use. Before commercial use, arrange the provider's commercial plan or substitute a licensed service. Google Maps links require no API key.
+
+## Scent introductions
+
+The atlas now includes 201 individually written bilingual scent sketches: one for each of the 200 base fragrances and the verified Dear Polly addition. Each Chinese paragraph is about 57–84 characters, paired with an English paragraph of about 27–36 words. The original editorial text draws on published brand notes and available brand descriptions; product-page references appear in each detail view. Cards display the complete paragraph. Different concentrations have separate copy.
+
+The source text and references are in `data/stories.json`, with the browser copy in `data/stories.js`. `node scripts/sync-data.cjs` regenerates browser data files. Newly imported products without a curated sketch receive a short description based only on their available notes. These descriptions do not affect recommendation scoring.

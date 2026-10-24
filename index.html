@@ -38,6 +38,9 @@
 
 .gender-fieldset{border:0;padding:0;margin:18px 0 22px;min-width:0}.gender-fieldset .preference-label{margin-bottom:11px}.gender-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.gender-options label{position:relative;cursor:pointer}.gender-options input{position:absolute;opacity:0;width:1px;height:1px}.gender-options span{display:block;text-align:center;padding:11px 12px;border:1px solid #d9d9d3;border-radius:3px;background:linear-gradient(125deg,#fffdf9,#f0f1ee 48%,#f4f1f5);color:#72776a;font-size:12px;box-shadow:inset 0 0 0 1px #ffffff99;transition:border-color .2s,box-shadow .2s}.gender-options input:checked+span{color:#4e5a45;border-color:#979f8e;background:linear-gradient(125deg,#f6f0e9,#e4e9e0 48%,#ede8f0);box-shadow:inset 0 0 0 1px #ffffffbb,0 2px 8px #b8b8aa18}.gender-options input:focus-visible+span{outline:2px solid #82788e;outline-offset:3px}.gender-fieldset .field-help{margin:9px 0 0}.audience-line{font-size:11px;color:#73796b;margin:18px 0}
 
+/* A city, not a coordinate form. */
+.city-picker{position:relative;margin:16px 0 0;min-width:0}.city-picker .field{display:block;margin-bottom:0}.city-picker input{width:100%;text-overflow:ellipsis}.city-picker input[aria-invalid=true]{border-color:#a06466}.city-results{position:absolute;left:0;right:0;top:75px;max-height:270px;overflow-y:auto;z-index:12;border:1px solid transparent;border-radius:5px;background:linear-gradient(#fafaf7,#fafaf7) padding-box,var(--nacre) border-box;box-shadow:0 12px 32px #5149581c;overscroll-behavior:contain}.city-results[hidden],.city-map-link[hidden]{display:none}.city-option{padding:13px 15px;cursor:pointer;border-bottom:1px solid #d9d7d044;line-height:1.5}.city-option:last-child{border-bottom:0}.city-option strong{display:block;font-size:13px;font-weight:500;color:#505c48}.city-option span{display:block;font-size:11px;color:#7d8075;margin-top:3px;overflow-wrap:anywhere}.city-option:hover,.city-option[aria-selected=true]{background:linear-gradient(115deg,#eeece7,#e6ebe3 60%,#eee9f0)}.city-status{margin:9px 0 8px;line-height:1.7;overflow-wrap:anywhere;min-height:19px}.city-map-link{display:inline-block;padding:8px 13px;border:1px solid transparent;border-radius:3px;background:linear-gradient(#f8f7f3dd,#f8f7f3dd) padding-box,var(--nacre) border-box;font-size:11px;color:#65715b;text-decoration:none}.city-map-link:focus-visible{outline:2px solid #82788e;outline-offset:3px}.city-attribution{margin:12px 0 0;font-size:10px!important}.city-attribution a{color:inherit;text-underline-offset:3px}@media(max-width:580px){.city-picker input{font-size:16px}.city-results{top:77px}.city-option{min-height:56px}.city-map-link{font-size:11px}}
+
 </style>
 
 </head>
@@ -67,7 +70,16 @@
      <div class="field-row"><label class="field">出生年月日 <input id="birth-date" type="date" min="1900-01-01" value="1998-05-16" required></label><label class="field">出生时 UTC 时差 <select id="utc-offset"><option value="8">UTC +8 · 中国标准时间</option value="9">UTC +9</option><option value="0">UTC +0</option><option value="1">UTC +1</option><option value="2">UTC +2</option><option value="-4">UTC −4</option><option value="-5">UTC −5</option><option value="-7">UTC −7</option><option value="-8">UTC −8</option><option value="custom">其他时差…</option></select></label></div>
      <fieldset class="gender-fieldset" aria-describedby="gender-help"><legend class="preference-label">性别 / 香气取向</legend><div class="gender-options"><label><input type="radio" name="gender" value="male"><span>男性</span></label><label><input type="radio" name="gender" value="female"><span>女性</span></label><label><input type="radio" name="gender" value="unisex" checked><span>中性</span></label></div><p id="gender-help" class="field-help">优先匹配相应品牌定位与中性香，同时结合星盘、场合和你的偏好。</p></fieldset>
      <label class="field hidden" id="offset-custom-field">自定义 UTC 时差（小时）<input id="offset-custom" type="number" min="-12" max="14" step="0.25" value="5.5"></label>
-     <details class="birth-details"><summary>补全出生时间与地点 <span>计算完整本命盘 ↗</span></summary><div class="field-row"><label class="field">出生时间（可留空）<input id="birth-time" type="time"></label><label class="field">出生地点<select id="birth-city"><option value="shanghai">上海</option><option value="beijing">北京</option><option value="guangzhou">广州</option><option value="chengdu">成都</option><option value="hongkong">香港</option><option value="taipei">台北</option><option value="newyork">纽约</option><option value="london">伦敦</option><option value="custom">手动填写经纬度</option></select></label></div><div class="field-row"><label class="field">纬度（北正南负）<input id="birth-lat" type="number" min="-89.9" max="89.9" step="any" value="31.2304"></label><label class="field">经度（东正西负）<input id="birth-lon" type="number" min="-180" max="180" step="any" value="121.4737"></label></div><p class="field-help">出生时间与地点齐全时，计算七曜、上升、主要相位与整宫宫位。只填生日时仅使用太阳；请核对出生当日 UTC 时差及夏令时。</p></details>
+     <details class="birth-details"><summary>补全出生时间与地点 <span>计算完整本命盘 ↗</span></summary>
+<label class="field">出生时间（可留空）<input id="birth-time" type="time"></label>
+<div class="city-picker">
+<label class="field" for="birth-city">出生城市<input id="birth-city" type="search" role="combobox" aria-autocomplete="list" aria-controls="birth-city-results" aria-expanded="false" aria-describedby="birth-city-status city-search-help" autocomplete="off" spellcheck="false" maxlength="120" placeholder="搜索全球城市，如：上海、Paris、New York"></label>
+<div id="birth-city-results" class="city-results" role="listbox" aria-label="匹配的城市" hidden></div>
+<p id="birth-city-status" class="field-help city-status" role="status" aria-live="polite"></p>
+<a id="birth-city-map" class="city-map-link" target="_blank" rel="noopener noreferrer" hidden>在 Google Maps 查看 ↗</a>
+</div>
+<p id="city-search-help" class="field-help city-attribution">城市搜索：<a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">Open-Meteo</a> / <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer">GeoNames</a>。仅发送城市关键词。</p>
+<p class="field-help">出生时间与城市齐全时，计算七曜、上升、主要相位与整宫宫位。只填生日时仅使用太阳；请核对出生当日 UTC 时差及夏令时。</p></details>
      <div id="goal-fields" class="hidden"><div class="field-row"><label class="field">我正在努力的方向<select id="goal"><option value="startup">创业 / 事业新阶段</option><option value="growth">学习 / 个人成长</option><option value="relationship">建立关系 / 恋爱</option><option value="reset">重新找回状态</option><option value="custom">自定义目标</option></select></label><label class="field">希望实现的日期<input id="goal-date" type="date"></label></div><label class="field optional-field">写得更具体一点 <span>选填</span><input id="goal-text" maxlength="120" placeholder="例如：推进一个新项目，让想法成为现实"></label></div>
      <div id="event-fields" class="hidden"><div class="field-row"><label class="field">那天要做的事<select id="event"><option value="interview">面试 / 交流</option><option value="client">客户面谈</option><option value="date">约会 / 见喜欢的人</option><option value="presentation">演讲 / 路演</option><option value="study">写作 / 深度学习</option><option value="creative">创作 / 自由探索</option><option value="social">聚会 / 社交</option><option value="custom">其他重要的事</option></select></label><label class="field">重要日程<input id="event-date" type="date"></label></div><label class="field optional-field">当天的具体安排 <span>选填</span><input id="event-text" maxlength="120" placeholder="例如：和导师第一次视频面谈"></label></div>
      <div id="sky-fields" class="hidden"><div class="field-row"><label class="field">目标 / 当天参考时间<input id="sky-time" type="time" value="12:00"></label><label class="field">当天 UTC 时差（小时）<input id="sky-offset" type="number" min="-12" max="14" step="0.25" value="8"></label></div><p class="field-help">阶段心愿使用目标日期，重要的一天使用当天日期。按所填当地时间计算行运，未填时间时参考中午 12:00；不推断全天运势。</p></div>
@@ -374,6 +386,14 @@ window.PRONOIA_EN_DATA = {"catalog":{"artisan-mure-musc-edt":{"brand":"L’Artis
 <script>
 /* English translations of the static interface. Keys match trimmed source text. */
 window.PRONOIA_STATIC_EN = {
+  "出生城市": "Birth city",
+  "搜索全球城市，如：上海、Paris、New York": "Search cities worldwide, e.g. Shanghai, Paris, New York",
+  "匹配的城市": "Matching cities",
+  "在 Google Maps 查看 ↗": "View on Google Maps ↗",
+  "城市搜索：": "City search: ",
+  "。仅发送城市关键词。": ". Only the city query is sent.",
+  "出生时间与城市齐全时，计算七曜、上升、主要相位与整宫宫位。只填生日时仅使用太阳；请核对出生当日 UTC 时差及夏令时。": "With a birth time and city, calculate seven planets, the Ascendant, major aspects and whole-sign houses. With a date only, use the Sun. Check the UTC offset and daylight saving time on your birth date.",
+
   "性别 / 香气取向": "Gender / scent direction",
   "男性": "Male",
   "女性": "Female",
@@ -957,6 +977,67 @@ window.PronoiaOnline=(()=>{
 
 </script>
 <script>
+/* Global city search. Only the city query is sent to Open-Meteo / GeoNames. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.PronoiaLocations=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+'use strict';
+const clean=v=>typeof v==='string'?v.trim().slice(0,120):'';
+function normalizeCities(data){
+ const seen=new Set();
+ return (Array.isArray(data?.results)?data.results:[]).filter(p=>p&&/^PPL(?:A[2-5]?|C|G)?$/.test(p.feature_code)&&Number.isInteger(p.id)&&!seen.has(p.id)&&typeof p.latitude==='number'&&Number.isFinite(p.latitude)&&Math.abs(p.latitude)<=89.9&&typeof p.longitude==='number'&&Number.isFinite(p.longitude)&&Math.abs(p.longitude)<=180&&clean(p.name)&&clean(p.country)).map(p=>{
+  seen.add(p.id);const name=clean(p.name),region=[...new Set([p.admin2,p.admin1].map(clean).filter(x=>x&&x!==name))].join(', '),country=clean(p.country);
+  return {id:p.id,name,region,country,label:[name,region,country].filter(Boolean).join(', '),lat:p.latitude,lon:p.longitude,timezone:clean(p.timezone)};
+ }).filter((p,i,a)=>a.findIndex(x=>x.id===p.id)===i).slice(0,10);
+}
+function mapUrl(query){const q=typeof query==='string'?query.trim().slice(0,500):'';return q?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q):'';}
+async function searchCities(query,language='zh',signal,fetcher=globalThis.fetch){
+ const q=clean(query);if([...q].length<2)return [];
+ const url=new URL('https://geocoding-api.open-meteo.com/v1/search');
+ url.search=new URLSearchParams({name:q,count:'20',language:language==='en'?'en':'zh',format:'json'});
+ const response=await fetcher(url.toString(),{signal,credentials:'omit',referrerPolicy:'no-referrer'});
+ if(!response.ok)throw Error('City search unavailable');
+ const data=await response.json();if(data.error)throw Error('City search unavailable');
+ return normalizeCities(data);
+}
+function createPicker({input,list,status,map,getLanguage,onChange}){
+ let selected=null,items=[],active=-1,timer,controller,revision=0,mode='idle',composing=false;
+ const cache=new Map(),t=(zh,en)=>getLanguage()==='en'?en:zh;
+ const statusText=()=>({idle:t('输入城市名，从结果中选择出生城市。','Type a city name, then choose your birth city.'),short:t('请输入至少 2 个字或字母。','Enter at least 2 characters.'),loading:t('正在寻找城市…','Searching for cities…'),results:t(`找到 ${items.length} 个地点，请核对地区与国家后选择。`,`Found ${items.length} places. Check the region and country before choosing.`),empty:t('未找到城市。试试英文名称，或输入「城市, 国家」。','No cities found. Try the English name, or “city, country”.'),error:t('城市搜索暂不可用，请稍后重试。也可先在 Google Maps 核对城市名称。','City search is unavailable. Try again shortly, or check the city name on Google Maps.'),selected:t('已选择：','Selected: ')+(selected?.label||'')+(selected?.timezone?t(' · 时区：',' · Time zone: ')+selected.timezone:'')})[mode];
+ function updateMap(){const url=mapUrl(selected?.label||input.value);map.hidden=!url;if(url)map.href=url;else map.removeAttribute('href');map.textContent=t('在 Google Maps 查看 ↗','View on Google Maps ↗');}
+ function close(){list.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');active=-1;}
+ function render(){status.textContent=statusText();input.setAttribute('aria-busy',String(mode==='loading'));updateMap();}
+ function cancel(){revision++;clearTimeout(timer);controller?.abort();controller=null;}
+ function choose(index){const city=items[index];if(!city)return;cancel();selected=city;input.value=city.label;input.removeAttribute('aria-invalid');mode='selected';close();render();onChange(city);input.focus({preventScroll:true});}
+ function show(){
+  list.replaceChildren();active=-1;input.removeAttribute('aria-activedescendant');
+  items.forEach((city,i)=>{const option=document.createElement('div');option.id='birth-city-option-'+i;option.setAttribute('role','option');option.setAttribute('aria-selected','false');option.className='city-option';const name=document.createElement('strong'),detail=document.createElement('span');name.textContent=city.name;detail.textContent=[city.region,city.country].filter(Boolean).join(' · ');option.append(name,detail);option.addEventListener('mousedown',e=>e.preventDefault());option.addEventListener('click',()=>choose(i));list.append(option);});
+  const open=items.length>0&&document.activeElement===input;list.hidden=!open;input.setAttribute('aria-expanded',String(open));
+ }
+ async function run(){
+  const query=input.value.trim();if([...query].length<2){mode=query?'short':'idle';close();render();return;}
+  cancel();const ticket=revision,language=getLanguage(),key=language+'|'+query.toLocaleLowerCase();controller=new AbortController();const ownController=controller,timeout=setTimeout(()=>ownController.abort(),10000);
+  mode='loading';close();render();
+  try{const result=cache.get(key)||await searchCities(query,language,ownController.signal);if(ticket!==revision)return;items=result;if(!cache.has(key)){if(cache.size>=40)cache.delete(cache.keys().next().value);cache.set(key,result);}mode=items.length?'results':'empty';show();render();}
+  catch(e){if(ticket!==revision)return;items=[];mode='error';close();render();}
+  finally{clearTimeout(timeout);if(ticket===revision)controller=null;}
+ }
+ function edited(){cancel();selected=null;items=[];input.removeAttribute('aria-invalid');close();onChange(null);mode=input.value.trim()?'short':'idle';if([...input.value.trim()].length>=2){mode='loading';if(!composing)timer=setTimeout(run,350);}render();}
+ input.addEventListener('input',edited);
+ input.addEventListener('compositionstart',()=>{composing=true;cancel();});input.addEventListener('compositionend',()=>{composing=false;edited();});
+ input.addEventListener('keydown',e=>{
+  if(e.isComposing||composing)return;
+  if(e.key==='Escape'){cancel();close();mode=selected?'selected':items.length?'results':'idle';render();return;}
+  if(e.key==='Enter'&&!selected){e.preventDefault();if(active>=0&&!list.hidden)choose(active);else run();return;}
+  if((e.key==='ArrowDown'||e.key==='ArrowUp')&&items.length){e.preventDefault();list.hidden=false;input.setAttribute('aria-expanded','true');active=active<0?(e.key==='ArrowDown'?0:items.length-1):(active+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;[...list.children].forEach((el,i)=>el.setAttribute('aria-selected',String(i===active)));input.setAttribute('aria-activedescendant',list.children[active].id);list.children[active].scrollIntoView({block:'nearest'});}
+ });
+ input.addEventListener('focus',()=>{if(!selected&&items.length)show();});input.addEventListener('blur',()=>setTimeout(()=>{if(document.activeElement!==input)close();},150));
+ render();
+ return {getSelected:()=>selected,refresh:()=>{cancel();if(!selected&&input.value.trim()){items=[];run();}else render();},requireSelection:()=>{if(!selected){input.closest('details').open=true;input.setAttribute('aria-invalid','true');input.focus({preventScroll:true});throw Error(t('请从搜索结果中选择出生城市，再计算完整星盘。','Choose your birth city from the search results to calculate a full chart.'));}return selected;}};
+}
+return {normalizeCities,mapUrl,searchCities,createPicker};
+});
+
+</script>
+<script>
 /* Pronoia. Browser-local, bilingual scent rituals. */
 'use strict';
 const C=window.ScentCore,$=id=>document.getElementById(id);
@@ -987,6 +1068,7 @@ const tradition=t=>lang==='en'?{...t,...EN.traditions[t.id]}:t;
 const study=s=>lang==='en'?{...s,...EN.studies[s.id]}:s;
 const noteAliases=Object.fromEntries(DB.map(p=>[p.id,Object.values(EN.catalog[p.id]?.notes||{}).flat().join(' ')]));
 let state={owned:[],custom:[],imported:[],loved:[],plans:[]},current=null,currentView='recommend',demo=true,toastTimer,detailId=null,storageAvailable=true;
+let birthCityPicker;
 const staticNodes=[],staticAttributes=[];
 function captureStatic(){
  document.querySelectorAll('option:not([value])').forEach(el=>el.setAttribute('value',el.textContent));
@@ -1031,13 +1113,14 @@ function bottle(p){const src=window.PRONOIA_IMAGES?.[p.id]||p.imagePath||p.image
 function syncCount(){$('owned-count').textContent=state.owned.length;}
 function makeContext(){
  const level=Number(document.querySelector('input[name="level"]:checked').value),offset=$('utc-offset').value==='custom'?$('offset-custom').value:$('utc-offset').value;
- const chart=C.birthChart({date:$('birth-date').value,time:$('birth-time').value,offset,lat:$('birth-lat').value,lon:$('birth-lon').value},window.Astronomy);
+ const city=$('birth-time').value?birthCityPicker.requireSelection():birthCityPicker.getSelected();
+ const chart=C.birthChart({date:$('birth-date').value,time:$('birth-time').value,offset,lat:city?.lat,lon:city?.lon},window.Astronomy);
  if(level>=2&&!$('goal-date').value)throw Error(tr('请填写阶段性目标的日期。','Please choose a date for your intention.'));
  if(level===3&&!$('event-date').value)throw Error(tr('请填写重要日程的日期。','Please choose a date for your occasion.'));
  const sky=level>=2&&$('use-astro').checked?C.skyAt({date:level===3?$('event-date').value:$('goal-date').value,time:$('sky-time').value,offset:$('sky-offset').value},window.Astronomy):null;
  return {level,chart,demo,sky,gender:document.querySelector('input[name="gender"]:checked')?.value||'unisex',useAstro:$('use-astro').checked,goal:$('goal').value,goalText:$('goal-text').value.trim(),goalDate:$('goal-date').value,event:$('event').value,eventText:$('event-text').value.trim(),eventDate:$('event-date').value,intention:$('intention').value,likes:checked('likes'),feelingText:$('feeling-text').value.trim(),maxIntensity:Number($('max-intensity').value),exclude:$('exclude').value,noteAliases,ownedOnly:$('owned-only').checked,allowLayer:$('allow-layer').checked,owned:[...state.owned],loved:[...state.loved]};
 }
-function errorText(s){if(lang==='zh')return s;const map={'星位计算模块未加载，请刷新页面。':'The astronomy module did not load. Please refresh.','请填写出生年月日。':'Please enter your date of birth.','请填写 1900 年至今天之间的有效出生日期。':'Enter a valid date of birth between 1900 and today.','出生时间格式应为 HH:MM':'Use HH:MM for the birth time.','出生时间无效':'Please enter a valid birth time.','星位计算模块未加载。':'The astronomy module did not load.','请核对目标日期与参考时间。':'Check the target date and reference time.','日期需在 1900–2100 年内，且时间与时差有效。':'Use a date between 1900 and 2100, a valid time, and a UTC offset from −12 to +14.'};if(map[s])return map[s];if(s.includes('超出有效范围'))return 'Check the UTC offset (−12 to +14), latitude (−89.9 to +89.9), and longitude (−180 to +180).';return s;}
+function errorText(s){if(lang==='zh')return s;const map={'星位计算模块未加载，请刷新页面。':'The astronomy module did not load. Please refresh.','请填写出生年月日。':'Please enter your date of birth.','请填写 1900 年至今天之间的有效出生日期。':'Enter a valid date of birth between 1900 and today.','出生时间格式应为 HH:MM':'Use HH:MM for the birth time.','出生时间无效':'Please enter a valid birth time.','星位计算模块未加载。':'The astronomy module did not load.','请核对目标日期与参考时间。':'Check the target date and reference time.','日期需在 1900–2100 年内，且时间与时差有效。':'Use a date between 1900 and 2100, a valid time, and a UTC offset from −12 to +14.'};if(map[s])return map[s];if(s.includes('超出有效范围'))return 'Check the UTC offset (−12 to +14) and select a valid birth city.';return s;}
 function calculate(scroll=false){try{const ctx=makeContext(),results=C.rank(catalog(),ctx);current={ctx,results,layer:C.layering(results.ranked,ctx)};dirty=false;$('form-error').classList.add('hidden');renderResults();document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(scroll)$('results').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}catch(e){$('form-error').textContent=errorText(e.message);$('form-error').classList.remove('hidden');if(scroll)$('form-error').scrollIntoView({block:'center',behavior:'smooth'});}}
 const planetName=body=>tr(C.ASTRO.PLANETS[body]?.zh||body,C.ASTRO.PLANETS[body]?.en||body);
 const zodiacName=index=>tr(C.SIGNS[index]+'座',signsEn[index]);
@@ -1141,7 +1224,7 @@ function refreshOptions(){
  $('family-filter').innerHTML=`<option value="">${tr('所有感觉','All moods')}</option>`+Object.keys(C.TAGS).map(k=>`<option value="${k}">${tag(k)}</option>`).join('');$('family-filter').value=family;
  $('catalog-description').textContent=tr(`${new Set(publicCatalog().map(p=>p.brand)).size} 个品牌，${publicCatalog().length} 款代表香气。每一缕灵感，都有可追溯的出处。`,`${publicCatalog().length} distinctive scents from ${new Set(publicCatalog().map(p=>p.brand)).size} houses. Inspiration, with a source for every note.`);
 }
-function switchLanguage(next){if(!['zh','en'].includes(next)||lang===next)return;lang=next;try{localStorage.setItem('pronoia-language',lang);}catch{}translateStatic();chips('likes','likes',checked('likes'));renderFeelingFeedback();chips('custom-tags','customTags',checked('customTags'));refreshOptions();if(current){renderResults();}if(dirty)showDirty();else document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(!$('form-error').classList.contains('hidden'))$('form-error').textContent=tr('请核对出生资料与日期后再次提交。','Please check the birth details and dates, then submit again.');$('custom-error').textContent='';navigate(currentView,false);if($('detail-dialog').open)openDetails(detailId);if($('lookup-dialog').open)PronoiaOnline.refresh();$('toast').classList.remove('show');}
+function switchLanguage(next){if(!['zh','en'].includes(next)||lang===next)return;lang=next;try{localStorage.setItem('pronoia-language',lang);}catch{}translateStatic();birthCityPicker?.refresh();chips('likes','likes',checked('likes'));renderFeelingFeedback();chips('custom-tags','customTags',checked('customTags'));refreshOptions();if(current){renderResults();}if(dirty)showDirty();else document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(!$('form-error').classList.contains('hidden'))$('form-error').textContent=tr('请核对出生资料与日期后再次提交。','Please check the birth details and dates, then submit again.');$('custom-error').textContent='';navigate(currentView,false);if($('detail-dialog').open)openDetails(detailId);if($('lookup-dialog').open)PronoiaOnline.refresh();$('toast').classList.remove('show');}
 function setup(){
  captureStatic();translateStatic();$('birth-date').max=today;$('event-date').value=today;const future=new Date();future.setDate(future.getDate()+90);$('goal-date').value=localDate(future);chips('likes','likes',['focus','calm']);refreshOptions();
  $('begin-ritual').addEventListener('click',()=>{$('ritual-workspace').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});$('birth-date').focus({preventScroll:true});});
@@ -1152,8 +1235,7 @@ function setup(){
  document.querySelectorAll('input[name="level"]').forEach(el=>el.addEventListener('change',()=>{const n=Number(el.value);$('goal-fields').classList.toggle('hidden',n<2);$('event-fields').classList.toggle('hidden',n<3);$('sky-fields').classList.toggle('hidden',n<2);}));
  $('utc-offset').addEventListener('change',()=>$('offset-custom-field').classList.toggle('hidden',$('utc-offset').value!=='custom'));
  $('birth-date').addEventListener('change',()=>{demo=false;$('demo-banner').classList.add('hidden');});
- $('birth-city').addEventListener('change',()=>{const cities={shanghai:[31.2304,121.4737],beijing:[39.9042,116.4074],guangzhou:[23.1291,113.2644],chengdu:[30.5728,104.0668],hongkong:[22.3193,114.1694],taipei:[25.033,121.5654],newyork:[40.7128,-74.006],london:[51.5074,-.1278]};const c=cities[$('birth-city').value];if(c){$('birth-lat').value=c[0];$('birth-lon').value=c[1];toast(tr('已更新地点坐标，请核对出生当日 UTC 时差。','Coordinates updated. Check the UTC offset on your birth date.'));}});
- ['birth-lat','birth-lon'].forEach(id=>$(id).addEventListener('input',()=>$('birth-city').value='custom'));
+ birthCityPicker=PronoiaLocations.createPicker({input:$('birth-city'),list:$('birth-city-results'),status:$('birth-city-status'),map:$('birth-city-map'),getLanguage:()=>lang,onChange:()=>{dirty=true;showDirty();}});
  $('use-astro').addEventListener('change',()=>calculate());
  ['catalog-search','brand-filter','family-filter'].forEach(id=>$(id).addEventListener(id==='catalog-search'?'input':'change',()=>{catalogPage=1;renderCatalog();}));$('wardrobe-search').addEventListener('input',renderWardrobe);
  $('add-custom').addEventListener('click',()=>PronoiaOnline.open());

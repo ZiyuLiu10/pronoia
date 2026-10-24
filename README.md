@@ -24,6 +24,12 @@ Birth details, feelings and personal plans are processed in the visitor’s brow
 
 `index.html` is the complete standalone website, including code, data, artwork and 200 product images. GitHub Pages serves it from `main` / root.
 
-[`pronoia-source.zip`](pronoia-source.zip) contains modular HTML/CSS/JavaScript, research, image credits and 45 tests. No frontend build step or secret API key is needed. Run `node --test tests/*.test.cjs` in the extracted source directory.
+[`pronoia-source.zip`](pronoia-source.zip) contains modular HTML/CSS/JavaScript, research, image credits and 50 tests. No frontend build step or secret API key is needed. Run `node --test tests/*.test.cjs` in the extracted source directory.
 
 Code: MIT. Product photography, brand logos and trademarks retain their original rights and are excluded from the code license. Per-image sources are in `data/image-credits.json`.
+
+## Birth city search
+
+Search cities worldwide in Chinese or English, distinguish places by region and country, and open the chosen city on Google Maps. Coordinates are handled internally; there are no coordinate input fields. In-page search uses Open-Meteo / GeoNames, not Google Places. Only the city query is sent to the search service. Birth date and time stay in the browser. Check the historical UTC offset and daylight saving time for the birth date. Editing the city text invalidates the previous selection. A full chart requires choosing a result.
+
+The free geocoding endpoint is for non-commercial use. Before commercial use, arrange the provider's commercial plan or substitute a licensed service. Google Maps links require no API key.

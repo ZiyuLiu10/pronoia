@@ -34,6 +34,8 @@
 /* The chart-to-note explanation belongs to each fragrance, not a separate chart panel. */
 .astro-card-reason{margin:16px 0;padding:15px 0 10px;border-top:1px solid #d4d4cb;border-bottom:1px solid #e4e3dc;color:#69715f}.astro-card-reason>span{display:block;font-size:9px;letter-spacing:.9px;color:#7e8275;margin-bottom:8px}.astro-card-reason p{font-size:11px;line-height:1.85;margin:6px 0;overflow-wrap:anywhere}.astrology-detail ol{padding-left:20px}.astrology-detail li{margin:10px 0;line-height:1.9}#sky-fields{margin:18px 0;padding-top:17px;border-top:1px solid var(--line)}@media(max-width:580px){.astro-card-reason p{font-size:12px}.astro-card-reason>span{font-size:10px}}
 
+.selection-reading{max-width:820px;margin:-9px 0 27px;color:#69715f;font-size:12px;line-height:1.9}.scent-reading{margin:20px 0 28px}.scent-reading>small{display:block;color:#7e8275;line-height:1.9}.scent-reading h4{margin:22px 0 9px;font-size:13px;font-weight:500;letter-spacing:.3px}.scent-need{margin:15px 0;padding:5px 0 18px;border-bottom:1px solid var(--line)}.scent-need ul{padding-left:18px;color:#73796b;font-size:12px}.scent-need .matched-materials{color:#56634c}.scent-reading .field-help{font-size:11px}.selection-reading[hidden]{display:none}
+
 </style>
 
 </head>
@@ -81,7 +83,7 @@
    <div id="demo-banner" class="demo-banner"><span>✳</span><p>当前为演示资料<br><small>出生日期 1998.05.16；请替换为你的信息。</small></p></div>
    </aside>
   </div>
-  <section class="results-section" id="results" aria-live="polite"><div class="results-heading"><div><span class="eyebrow">CURATED FOR YOUR MOMENT</span><h2>你的香气提案 <span id="result-count">03</span></h2><p id="result-context"></p></div><button id="save-plan" class="outline-button">＋ 收藏这次仪式</button></div><div id="recommendations" class="perfume-grid"></div><div id="layering"></div><div class="action-note" id="action-note"></div></section>
+  <section class="results-section" id="results" aria-live="polite"><div class="results-heading"><div><span class="eyebrow">CURATED FOR YOUR MOMENT</span><h2>你的香气提案 <span id="result-count">03</span></h2><p id="result-context"></p></div><button id="save-plan" class="outline-button">＋ 收藏这次仪式</button></div><p id="selection-reading" class="selection-reading" hidden></p><div id="recommendations" class="perfume-grid"></div><div id="layering"></div><div class="action-note" id="action-note"></div></section>
  </section>
  <section id="view-wardrobe" class="view hidden"><div class="page-heading"><span class="eyebrow">THE SCENTS YOU CALL YOURS</span><h1>我的香水柜</h1><p>让已有的香气，遇见新的时刻。</p></div><div class="toolbar"><label class="search-field"><span>⌕</span><input id="wardrobe-search" placeholder="在香水柜里搜索" aria-label="搜索我的香水"></label><button class="primary-button compact" id="add-custom">＋ 添加自己的香水</button><button class="outline-button" data-go="catalog">去图鉴添加 ↗</button></div><div id="wardrobe-list" class="perfume-grid"></div><div id="personal-archive" class="personal-archive"></div><section class="saved-section"><div class="section-title"><h2>收藏的香气仪式</h2><span class="eyebrow">YOUR IMPORTANT DAYS</span></div><div id="saved-plans"></div></section><div class="data-toolbar"><p>香水柜与收藏保存在此浏览器。清除浏览器数据会丢失记录；建议定期导出。</p><button class="outline-button" id="export-data">导出我的数据</button><label class="outline-button import-label">导入备份<input id="import-data" type="file" accept="application/json,.json"></label><button class="text-button danger" id="clear-data">清空本地数据</button></div></section>
  <section id="view-catalog" class="view hidden"><div class="page-heading"><span class="eyebrow">AN ATLAS OF SCENT</span><h1>香水图鉴</h1><p id="catalog-description"></p></div><div class="toolbar"><label class="search-field"><span>⌕</span><input id="catalog-search" placeholder="搜索香水、品牌或香调，如：佛手柑" aria-label="搜索香水图鉴"></label><select id="brand-filter" aria-label="按品牌筛选"><option value="">所有品牌</option></select><select id="family-filter" aria-label="按感觉筛选"><option value="">所有感觉</option></select></div><p class="catalog-meta" id="catalog-count"></p><div id="catalog-list" class="perfume-grid catalog-grid"></div><nav id="catalog-pagination" class="catalog-pagination" aria-label="图鉴分页"></nav><div class="catalog-search-more"><span>还没有找到你的香水？</span><button class="outline-button" id="catalog-online">联网查找 ↗</button></div><p class="catalog-boundary">图鉴收录 200 款香水，并持续接收官网补录。不同浓度分别记录；图片展示容量或包装可能因地区而异。香调是嗅觉描述，不等于完整成分表。</p></section>
@@ -540,6 +542,9 @@ Object.assign(window.PRONOIA_STATIC_EN,{
 'use strict';
 const SOURCE='https://www.esotericarchives.com/agrippa/op1.htm';
 const HOUSE_SOURCE='https://www.skyscript.co.uk/lilly_houses.html';
+const CONDITION_SOURCE='https://www.skyscript.co.uk/dig5.html';
+const ELEMENTS=[{zh:'火',en:'Fire',styleZh:'主动、鲜明、有表达欲',styleEn:'initiative, presence and expression'},{zh:'土',en:'Earth',styleZh:'沉稳、细腻、重视质感',styleEn:'steadiness, detail and texture'},{zh:'风',en:'Air',styleZh:'轻盈、好奇、重视交流',styleEn:'lightness, curiosity and exchange'},{zh:'水',en:'Water',styleZh:'柔和、感性、重视氛围',styleEn:'softness, feeling and atmosphere'}];
+const FUNCTIONS={Sun:{zh:'自我表达',en:'self-expression'},Moon:{zh:'安定与适应',en:'ease and adaptability'},Mercury:{zh:'清晰沟通',en:'clear communication'},Venus:{zh:'亲和与审美',en:'connection and aesthetics'},Mars:{zh:'行动与边界',en:'initiative and boundaries'},Jupiter:{zh:'视野与信心',en:'perspective and confidence'},Saturn:{zh:'秩序与耐心',en:'structure and patience'}};
 const PLANETS={Sun:{zh:'太阳',en:'Sun'},Moon:{zh:'月亮',en:'Moon'},Mercury:{zh:'水星',en:'Mercury'},Venus:{zh:'金星',en:'Venus'},Mars:{zh:'火星',en:'Mars'},Jupiter:{zh:'木星',en:'Jupiter'},Saturn:{zh:'土星',en:'Saturn'}};
 const RULERS=['Mars','Venus','Mercury','Moon','Sun','Mercury','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
 const EXALTATION={Sun:0,Moon:1,Mercury:5,Venus:11,Mars:9,Jupiter:3,Saturn:6};
@@ -607,12 +612,64 @@ function skyAt(input,A){
  const date=new Date(Date.UTC(y,m-1,d,h,min)-offset*3600000),planets={};for(const body of Object.keys(PLANETS))planets[body]=position(A,body,date);
  return {date:value,time,offset,utc:date.toISOString(),assumedNoon:!input.time,planets};
 }
+const clamp=(n,lo=0,hi=1)=>Math.max(lo,Math.min(hi,n));
+// An explicit Pronoia interpretation, not a full Lilly fortitude calculation.
+// Distinguish friction, fluency and activation; a conjunction is not always easy.
+function aspectEffect(hit,other){
+ if([90,180].includes(hit.angle))return 'challenge';
+ if([60,120].includes(hit.angle))return 'flow';
+ if(hit.angle===0&&['Mars','Saturn'].includes(other))return 'challenge';
+ if(hit.angle===0&&['Venus','Jupiter'].includes(other))return 'flow';
+ return 'activation';
+}
+function condition(body,chart){
+ const p=chart.planets[body],factors=[],add=(kind,value,extra={})=>factors.push({kind,value,...extra});
+ const values={domicile:.22,exaltation:.18,detriment:-.2,fall:-.16};
+ if(values[p.dignity.kind])add(p.dignity.kind,values[p.dignity.kind]);
+ if(p.retrograde)add('retrograde',-.16);
+ if([1,4,7,10].includes(p.house))add('angular',.1,{house:p.house});
+ if(body!=='Sun'&&chart.planets.Sun){const separation=distance(p.longitude,chart.planets.Sun.longitude);if(separation<=17/60)add('cazimi',.2,{separation});else if(separation<=8.5)add('combust',-.22,{separation});else if(separation<=17)add('beams',-.1,{separation});}
+ const ruler=RULERS[p.index],rp=chart.planets[ruler];
+ if(ruler!==body&&rp&&RULERS[rp.index]===body)add('reception',.12,{other:ruler});
+ for(const hit of chart.aspects||[]){if(hit.a!==body&&hit.b!==body)continue;const other=hit.a===body?hit.b:hit.a,effect=aspectEffect(hit,other);if(effect!=='activation')add('aspect',hit.strength*(effect==='flow'?.1:-.14),{aspect:hit,other,effect});}
+ const ease=clamp(factors.reduce((s,f)=>s+Math.max(0,f.value),0)),friction=clamp(factors.reduce((s,f)=>s+Math.max(0,-f.value),0));
+ return {body,position:p,factors,ease,friction,strength:clamp(.5+ease-friction,.1,.9)};
+}
+function interpret(chart,ctx={},transits=[]){
+ if(!chart.complete)return {complete:false,needs:[],conditions:{},temperament:null};
+ const planets=chart.planets,conditions=Object.fromEntries(Object.keys(planets).map(body=>[body,condition(body,chart)]));
+ const drivers=[],addDriver=(body,index,weight)=>drivers.push({body,index,element:index%4,weight});
+ for(const [body,weight] of Object.entries({Sun:1,Moon:2,Venus:1.5,Mercury:1}))if(planets[body])addDriver(body,planets[body].index,weight);
+ if(chart.asc)addDriver('Ascendant',chart.asc.index,2);
+ if(chart.chartRuler)addDriver(chart.chartRuler,planets[chart.chartRuler].index,1.5);
+ const total=drivers.reduce((s,d)=>s+d.weight,0),elements=ELEMENTS.map((e,index)=>({...e,index,share:drivers.filter(d=>d.element===index).reduce((s,d)=>s+d.weight,0)/total,drivers:drivers.filter(d=>d.element===index)})).sort((a,b)=>b.share-a.share||a.index-b.index);
+ // Element distribution describes the natal style only. There is no missing-
+ // element bonus and no assumption that a small share needs to be remedied.
+ const demands={},contexts={},addDemand=(body,weight,context)=>{demands[body]=(demands[body]||0)+weight;(contexts[body]||=[]).push(context);};
+ if((ctx.level||1)===1){for(const [body,weight] of Object.entries({Sun:.7,Moon:1,Venus:1.25}))addDemand(body,weight,{kind:'personal'});if(chart.chartRuler)addDemand(chart.chartRuler,.8,{kind:'ruler'});}
+ const topics=[];if(ctx.level>=2)topics.push({key:ctx.goalKey||'custom',weight:ctx.level===3?.45:1});if(ctx.level===3)topics.push({key:ctx.eventKey||'custom',weight:1});
+ for(const topic of topics){const theme=THEMES[topic.key]||THEMES.custom;for(const [body,w] of Object.entries(theme.planets))addDemand(body,w*topic.weight,{kind:'theme',topic:topic.key});if(chart.asc)for(const house of theme.houses){const index=(chart.asc.index+house-1)%12;addDemand(RULERS[index],.9*topic.weight,{kind:'house',house,index,topic:topic.key});}}
+ // For unclassified custom goals, use only the user's explicit intention.
+ if(!Object.keys(demands).length&&ctx.level>=2){const body={focus:'Mercury',calm:'Moon',confidence:'Sun',connection:'Venus',energy:'Mars',creativity:'Venus'}[ctx.intention];if(body)addDemand(body,1,{kind:'intention',intention:ctx.intention});}
+ const timed=body=>transits.filter(t=>t.b===body&&t.strength>0).map(t=>({...t,effect:aspectEffect(t,t.a)}));
+ const transitLoad=body=>clamp(timed(body).reduce((s,t)=>s+(t.effect==='challenge'?t.strength*.3:0),0));
+ const needs=Object.entries(demands).map(([body,demand])=>{
+  const c=conditions[body],pressure=clamp(c.friction+transitLoad(body)),candidates=[{planet:body,link:'self'}],ruler=RULERS[planets[body].index];
+  if(ruler!==body)candidates.push({planet:ruler,link:'dispositor'});
+  for(const a of chart.aspects||[]){if(a.a!==body&&a.b!==body)continue;const other=a.a===body?a.b:a.a;if(aspectEffect(a,other)==='flow'&&a.strength>0&&!candidates.some(x=>x.planet===other))candidates.push({planet:other,link:'aspect',aspect:a});}
+  const merit=x=>conditions[x.planet].strength+(x.link==='self'?.12:x.link==='dispositor'?.08:0)-.22*transitLoad(x.planet);
+  candidates.sort((a,b)=>merit(b)-merit(a)||a.planet.localeCompare(b.planet));
+  const self=candidates.find(x=>x.link==='self'),best=candidates[0],resource=pressure>=.2&&merit(best)>merit(self)+.08?best:self;
+  return {body,demand,priority:demand*(.5+.7*c.friction+.9*transitLoad(body)),pressure,mode:pressure>=.2?'support':'express',resource,condition:c,contexts:contexts[body],transits:timed(body)};
+ }).sort((a,b)=>b.priority-a.priority||a.body.localeCompare(b.body)).slice(0,3);
+ return {complete:true,temperament:{elements,drivers},conditions,needs,source:CONDITION_SOURCE};
+}
 function buildTarget(chart,ctx={}){
  const signals=[],planets=chart.planets||{},add=(planet,weight,meta)=>{if(PLANETS[planet]&&weight>0)signals.push({planet,weight,...meta});};
  const base={Sun:.9,Moon:1,Mercury:.65,Venus:1.5,Mars:.5,Jupiter:.45,Saturn:.4};
  for(const [body,p] of Object.entries(planets)){
-  const natalAspects=(chart.aspects||[]).filter(a=>a.a===body||a.b===body),salience=1+Math.min(.3,natalAspects.reduce((s,a)=>s+.06*a.strength,0));
-  const weight=(base[body]||.4)*(p.dignity?.factor||1)*salience;
+  const natalAspects=(chart.aspects||[]).filter(a=>a.a===body||a.b===body);
+  const weight=(base[body]||.4)*(p.dignity?.factor||1);
   add(body,weight,{kind:'natal',body,position:p,aspects:natalAspects});
   add(RULERS[p.index],weight*.45,{kind:'dispositor',body,position:p});
   signals.push({kind:'zodiac',body,index:p.index,position:p,weight:weight*.45});
@@ -634,12 +691,16 @@ function buildTarget(chart,ctx={}){
    const hit=aspect(t.longitude,n.longitude,3);if(!hit)continue;
    const relevant=topics.reduce((s,topic)=>s+((THEMES[topic.key]||THEMES.custom).planets[b]||0)*topic.weight,0);
    const transit={a,b,...hit,date:ctx.sky.date,time:ctx.sky.time,transiting:t,natal:n};transits.push(transit);
-   add(b,(.15+.35*relevant)*hit.strength,{kind:'transit',transit,position:n});
+   // Tense transits inform needs below; do not simply amplify their scent.
+   if(aspectEffect(hit,a)!=='challenge')add(b,(.15+.35*relevant)*hit.strength,{kind:'transit',transit,position:n});
   }
  }
- return {signals,transits,source:SOURCE,houseSource:HOUSE_SOURCE,available:Object.keys(planets).length>0,complete:chart.complete,houseSystem:chart.houseSystem};
+ const analysis=interpret(chart,ctx,transits);
+ for(const signal of signals){signal.channel=['natal','dispositor','ascendant'].includes(signal.kind)||signal.kind==='zodiac'&&!signal.transiting?'temperament':'support';if(analysis.complete&&signal.channel==='support')signal.weight*=.25;}
+ for(const need of analysis.needs)add(need.resource.planet,need.priority*3,{kind:'support',channel:'support',need,body:need.body,position:planets[need.resource.planet]});
+ return {signals,transits,analysis,level:ctx.level||1,source:SOURCE,houseSource:HOUSE_SOURCE,available:Object.keys(planets).length>0,complete:chart.complete,houseSystem:chart.houseSystem};
 }
-function match(perfume,target){
+function matchSignals(perfume,target){
  const notes=[...new Set(Object.values(perfume.notes||{}).flat().filter(x=>typeof x==='string'))],matches=[],wanted={},offered={};let zodiacPoints=0,zodiacTotal=0;
  for(const signal of target.signals){let hits=[],strength=0,adapted=false;
   if(signal.kind==='zodiac'){hits=notes.filter(n=>SIGN_INCENSE[signal.index].re.test(n));strength=hits.length?1:0;}
@@ -656,7 +717,15 @@ function match(perfume,target){
  matches.sort((a,b)=>b.contribution-a.contribution);
  return {score:Math.max(0,Math.min(1,score)),planetaryScore,zodiacScore,matches,matched:matches.length>0};
 }
-return {SOURCE,HOUSE_SOURCE,PLANETS,RULERS,EXALTATION,ASPECTS,CORRESPONDENCES,SIGN_INCENSE,THEMES,distance,aspect,dignity,position,enrichChart,skyAt,buildTarget,match};
+function match(perfume,target){
+ if(!target.analysis?.complete)return matchSignals(perfume,target);
+ const personal=target.signals.filter(s=>s.channel==='temperament'),support=target.signals.filter(s=>s.channel==='support'),a=matchSignals(perfume,{signals:personal}),b=matchSignals(perfume,{signals:support});
+ const w=support.length?({1:.55,2:.35,3:.25}[target.level]??.55):1;
+ const weighted=(r,signals,weight)=>{const total=signals.reduce((s,x)=>s+x.weight,0);return r.matches.map(m=>({...m,contribution:total?m.contribution/total*weight:0}));};
+ const matches=[...weighted(a,personal,w),...weighted(b,support,1-w)].sort((x,y)=>y.contribution-x.contribution);
+ return {score:a.score*w+b.score*(1-w),temperamentScore:a.score,supportScore:b.score,profileWeights:{temperament:w,support:1-w},matches,matched:matches.length>0};
+}
+return {SOURCE,HOUSE_SOURCE,CONDITION_SOURCE,ELEMENTS,FUNCTIONS,PLANETS,RULERS,EXALTATION,ASPECTS,CORRESPONDENCES,SIGN_INCENSE,THEMES,distance,aspect,aspectEffect,dignity,condition,interpret,position,enrichChart,skyAt,buildTarget,match};
 });
 
 </script>
@@ -778,7 +847,7 @@ function rank(catalog,ctx){
  const ranked=pool.map(p=>scorePerfume(p,ctx)).sort((a,b)=>b.rawScore-a.rawScore||a.perfume.id.localeCompare(b.perfume.id));
  const selected=[];const remaining=[...ranked];
  while(selected.length<3&&remaining.length){remaining.sort((a,b)=>{const penalty=x=>selected.reduce((sum,s)=>sum+(s.perfume.brand===x.perfume.brand?3:0)+(s.perfume.family===x.perfume.family?4:0),0);return (b.rawScore-penalty(b))-(a.rawScore-penalty(a));});selected.push(remaining.shift());}
- return {selected,ranked,poolCount:pool.length,maxIntensity:max};
+ return {selected,ranked,poolCount:pool.length,maxIntensity:max,analysis:ctx.useAstro&&!ctx.chart.uncertain?ctx.astroTarget.analysis:null};
 }
 function layering(ranked,ctx){
  if(!ctx.allowLayer||ranked.length<2)return null;
@@ -951,6 +1020,31 @@ function errorText(s){if(lang==='zh')return s;const map={'星位计算模块未�
 function calculate(scroll=false){try{const ctx=makeContext(),results=C.rank(catalog(),ctx);current={ctx,results,layer:C.layering(results.ranked,ctx)};dirty=false;$('form-error').classList.add('hidden');renderResults();document.querySelector('#recommend-form button[type=submit]').innerHTML=tr('找到我的香气','Find my scent')+' <span>↗</span>';if(scroll)$('results').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}catch(e){$('form-error').textContent=errorText(e.message);$('form-error').classList.remove('hidden');if(scroll)$('form-error').scrollIntoView({block:'center',behavior:'smooth'});}}
 const planetName=body=>tr(C.ASTRO.PLANETS[body]?.zh||body,C.ASTRO.PLANETS[body]?.en||body);
 const zodiacName=index=>tr(C.SIGNS[index]+'座',signsEn[index]);
+const themeName=key=>C.GOALS[key]?goal(key):C.EVENTS[key]?event(key):key;
+const functionName=body=>tr(C.ASTRO.FUNCTIONS[body].zh,C.ASTRO.FUNCTIONS[body].en);
+function aspectText(a){return tr(`${planetName(a.a)}${a.zh}${planetName(a.b)}，容许偏差 ${a.orb.toFixed(1)}°`,`${planetName(a.a)} ${a.en} ${planetName(a.b)}, ${a.orb.toFixed(1)}° orb`);}
+function factorText(f){
+ const labels={domicile:tr('入庙，按规则视为可借助的资源','Domicile: a resource in this reading'),exaltation:tr('擢升，按规则视为可借助的资源','Exaltation: a resource in this reading'),detriment:tr('失势，本次侧重调和表达','Detriment: emphasise a balanced expression'),fall:tr('落陷，本次侧重调和表达','Fall: emphasise a balanced expression'),retrograde:tr('本命逆行，加入梳理与复核的主题','Natal retrograde: add reflection and review'),angular:tr(`落在第 ${f.house} 宫，属于角宫，主题更突出`,`House ${f.house} is angular, giving this theme prominence`),cazimi:tr('日心，作为支持因素','Cazimi, counted as a supportive factor'),combust:tr('燃烧，作为需要支持的因素','Combustion, counted as a factor needing support'),beams:tr('日光下，作为需要支持的因素','Under the Sun’s beams, counted as a factor needing support'),reception:tr(`与${f.other?planetName(f.other):''}形成守护互容`,`Mutual reception by domicile with ${f.other?planetName(f.other):''}`)};
+ if(f.kind==='aspect')return aspectText(f.aspect)+tr(f.effect==='challenge'?'，侧重调和':'，作为支持',f.effect==='challenge'?'; balance this theme':'; a supportive connection');
+ return (labels[f.kind]||f.kind)+(f.separation!==undefined?tr(`（距太阳 ${f.separation.toFixed(2)}°）`,` (${f.separation.toFixed(2)}° from the Sun)`):'');
+}
+function temperamentText(analysis){
+ if(!analysis?.complete)return tr('补全出生时间、时差与地点后，才能判断个人气质与本次需要支持的主题。','Add birth time, UTC offset and location to interpret your natal style and the themes to support.');
+ const leading=analysis.temperament.elements.filter((e,i)=>i===0||i===1&&e.share>=.2),style=leading.map(e=>tr(e.styleZh,e.styleEn)).join(tr('；','; '));
+ return tr(`按本次星盘规则，你的气质底色偏${leading.map(e=>e.zh).join('、')}：${style}。`,`This chart reading leans towards ${leading.map(e=>e.en.toLowerCase()).join(' and ')}: ${style}.`);
+}
+function needContext(n){return n.contexts.map(c=>c.kind==='house'?tr(`「${themeName(c.topic)}」相关的第 ${c.house} 宫在${zodiacName(c.index)}，由${planetName(n.body)}守护`,`${themeName(c.topic)}: house ${c.house} in ${zodiacName(c.index)}, ruled by ${planetName(n.body)}`):c.kind==='theme'?tr(`「${themeName(c.topic)}」的主题关联`,`Theme: ${themeName(c.topic)}`):c.kind==='ruler'?tr('本命命主星','Natal chart ruler'):c.kind==='intention'?tr('你选择的期望状态','Your selected intention'):tr('个人气质与感受','Personal style and feeling')).filter((v,i,a)=>a.indexOf(v)===i).join(tr('；','; '));}
+function resourceText(n){
+ const resource=planetName(n.resource.planet),body=planetName(n.body);
+ if(n.resource.link==='dispositor')return tr(`借用${body}落座的守护星${resource}：它在本命状态及所选行运下的支持评分更高。`,`Draw on ${resource}, ruler of ${body}’s sign: it has a stronger support score across natal conditions and the selected transits.`);
+ if(n.resource.link==='aspect')return tr(`借用与${body}形成${n.resource.aspect.zh}的${resource}：它的支持评分更高。`,`Draw on ${resource}, connected to ${body} by ${n.resource.aspect.en}: it has a stronger support score.`);
+ return tr(`以${body}自身的对应香材${n.mode==='support'?'支持这个主题':'延展这项主题'}。`,`Use ${body}’s own scent correspondences to ${n.mode==='support'?'support':'express'} this theme.`);
+}
+function interpretationDetails(result){
+ const a=current.results.analysis;if(!a?.complete)return `<p>${esc(temperamentText(a))}</p>`;
+ const drivers=a.temperament.drivers.map(d=>tr(`${d.body==='Ascendant'?'上升':planetName(d.body)}在${zodiacName(d.index)}`,`${d.body==='Ascendant'?'Ascendant':planetName(d.body)} in ${zodiacName(d.index)}`)).filter((v,i,all)=>all.indexOf(v)===i);
+ return `<div class="scent-reading"><p>${esc(temperamentText(a))}</p><small>${esc(drivers.join(' · '))}</small><h4>${tr('本次的幸运元素 · 支持主题','Your lucky elements · themes to support')}</h4><p class="field-help">${tr('这里的“幸运元素”指本次占星选香优先采用的行星主题与香材，不是缺什么就补什么。','“Lucky elements” are the planetary themes and scent notes prioritised by this reading; a low element share is not treated as a deficiency.')}</p>${a.needs.length?a.needs.map(n=>{const hits=result.astrology.matches.filter(m=>m.kind==='support'&&m.need.body===n.body),factors=[...n.condition.factors].sort((x,y)=>Math.abs(y.value)-Math.abs(x.value)).slice(0,3),timed=[...n.transits].sort((x,y)=>y.strength-x.strength).slice(0,2);return `<div class="scent-need"><h4>${esc(tr(n.mode==='support'?'支持与调和':'顺势表达',n.mode==='support'?'Support & balance':'Express & develop'))} · ${esc(functionName(n.body))}</h4><p>${esc(needContext(n))}</p><p>${esc(tr(`本命${planetName(n.body)}在${zodiacName(n.condition.position.index)} ${n.condition.position.degree.toFixed(1)}°。`,`Natal ${planetName(n.body)} in ${zodiacName(n.condition.position.index)} ${n.condition.position.degree.toFixed(1)}°. `))}${esc(resourceText(n))}</p>${factors.length||timed.length?`<ul>${factors.map(f=>`<li>${esc(factorText(f))}</li>`).join('')}${timed.map(t=>`<li>${esc(tr('所选时刻行运：','Reference-time transit: ')+aspectText(t)+tr(t.effect==='challenge'?'，提高调和优先级':t.effect==='flow'?'，作为顺势线索':'，仅记录主题被触及',t.effect==='challenge'?'; raises the support priority':t.effect==='flow'?'; a flowing connection':'; activation only'))}</li>`).join('')}</ul>`:''}<p class="matched-materials">${esc(hits.length?tr('这款香水对应：','Matched in this scent: ')+hits.map(m=>m.notes.map(term).join(' · ')+(m.adapted?tr('（香调类别延伸）',' (scent-family adaptation)'):'')).join('；'):tr('这款香水未命中这一支持主题的公开香调。','This scent has no published note match for this support theme.'))}</p></div>`;}).join(''):`<p>${tr('自定义目标尚无可识别的占星主题；保留个人气质与偏好推荐。','No astrological theme is identifiable for this custom goal; natal style and preferences remain active.')}</p>`}<p class="field-help">${tr('这是 Pronoia 的占星解释规则：综合尊贵状态、逆行、日距、角宫、互容与相位，再结合目标宫主星和参考时刻行运。数值由本产品制定，并非完整的传统尊贵评分或经过验证的转运模型。','Pronoia combines dignity, retrograde motion, solar distance, angular houses, mutual reception and aspects with relevant house rulers and reference-time transits. The weights are our interpretation, not a full traditional fortitude calculation or a verified model of changing luck.')}</p>${link(C.ASTRO.CONDITION_SOURCE,tr('传统行星状态依据 · Lilly 表格','Traditional planetary conditions · Lilly’s table'))}</div>`;
+}
 function astrologyReason(m){
  const p=m.position,planet=m.planet?planetName(m.planet):'',body=m.body?planetName(m.body):'',zodiac=p?zodiacName(p.index):zodiacName(m.index),degree=p?`${p.degree.toFixed(1)}°`:'',notes=m.notes.map(term).join(' · ');let reason='';
  const dignities={domicile:tr('入庙','domicile'),exaltation:tr('擢升','exaltation'),detriment:tr('失势','detriment'),fall:tr('落陷','fall')};
@@ -962,19 +1056,20 @@ function astrologyReason(m){
  if(m.kind==='sky')reason=tr(`${m.date} ${m.time} 月亮在${zodiac}，由${planet}守护`,`${m.date} ${m.time}: Moon in ${zodiac}, ruled by ${planet}`);
  if(m.kind==='zodiac')reason=tr(`${m.transiting?'参考时刻的':''}${body}在${zodiac}，对应${C.ASTRO.SIGN_INCENSE[m.index].zh}`,`${m.transiting?'Reference-time ':''}${body} in ${zodiac}: ${C.ASTRO.SIGN_INCENSE[m.index].en}`);
  if(m.kind==='transit'){const t=m.transit;reason=tr(`行运${planetName(t.a)}${t.zh}本命${planetName(t.b)}（偏差 ${t.orb.toFixed(1)}°）`,`${planetName(t.a)} transiting ${t.en} natal ${planetName(t.b)} (${t.orb.toFixed(1)}° orb)`);}
+ if(m.kind==='support'){const n=m.need;reason=tr(`为「${functionName(n.body)}」${n.mode==='support'?'提供支持':'延展优势'}，采用${planet}主题${n.resource.link==='dispositor'?'（由本命落座守护星承接）':n.resource.link==='aspect'?'（经本命顺畅相位连接）':''}`,`${n.mode==='support'?'Support':'Develop'} ${functionName(n.body)} through ${planet}${n.resource.link==='dispositor'?' (natal sign ruler)':n.resource.link==='aspect'?' (a flowing natal connection)':''}`);}
  return reason+' → '+notes+(m.adapted?tr('（香调类别延伸）',' (scent-family adaptation)'):'');
 }
 function astrologyHighlights(result){
  const matches=result.astrology?.matches||[],chosen=[],add=m=>{if(m&&!chosen.includes(m))chosen.push(m);};
  add(matches.find(m=>['ascendant','natal','dispositor'].includes(m.kind)));
- add(matches.find(m=>m.kind==='transit'));add(matches.find(m=>m.kind==='house'));add(matches.find(m=>m.kind==='sky'));add(matches.find(m=>m.kind==='zodiac'));
+ add(matches.find(m=>m.kind==='support'));add(matches.find(m=>m.kind==='house'));add(matches.find(m=>m.kind==='transit'));add(matches.find(m=>m.kind==='zodiac'));
  for(const m of matches)add(m);return chosen.slice(0,5);
 }
 function astroCard(result){const matches=astrologyHighlights(result).slice(0,2);return `<div class="astro-card-reason"><span>${tr('星盘如何选到它','HOW YOUR CHART MEETS THIS SCENT')}</span>${matches.length?matches.map(m=>`<p>${esc(astrologyReason(m))}</p>`).join(''):`<p>${tr('公开香调尚未命中传统对应，本款主要由其他偏好筛选入选。','No traditional correspondence matched its published notes; other preferences drove this selection.')}</p>`}</div>`;}
 function astroDetails(result){
  const matches=astrologyHighlights(result),ctx=current.ctx;
  const aspects=(ctx.chart.aspects||[]).filter(a=>matches.some(m=>m.body===a.a||m.body===a.b||m.planet===a.a||m.planet===a.b)).slice(0,3);
- return `<div class="detail-section astrology-detail"><h3>${tr('这张星盘，如何走向这缕香气','From your chart to this scent')}</h3>${matches.length?`<ol>${matches.map(m=>`<li>${esc(astrologyReason(m))}</li>`).join('')}</ol>`:`<p>${tr('这款香水没有公开香调命中所用传统对应。','Its published notes do not match the selected traditional correspondences.')}</p>`}${aspects.length?`<p>${tr('参与本命行星权重的相位：','Natal aspects contributing to planetary emphasis: ')}${aspects.map(a=>esc(tr(planetName(a.a)+a.zh+planetName(a.b),planetName(a.a)+' '+a.en+' '+planetName(a.b))+` (${a.orb.toFixed(1)}°)`)).join('；')}</p>`:''}<p>${ctx.chart.complete?tr('使用热带黄道、地心星位、传统七曜与整宫制；金星、月亮、太阳及命主星参与本命香气选择。','Uses the tropical zodiac, geocentric positions, seven traditional planets and whole-sign houses. Venus, Moon, Sun and the chart ruler shape the natal selection.'):tr('出生时间未补全：仅按太阳星座及其守护星选香，不推定月亮、金星、上升或宫位。','Birth time is incomplete: only the Sun sign and its ruler are used for the natal match. Moon, Venus, rising sign and houses are not inferred.')}</p>${ctx.chart.complete&&!ctx.chart.asc?`<p>${tr('该出生纬度不计算上升与宫位，只使用七曜星位及相位。','At this birth latitude, rising sign and houses are omitted; only planetary positions and aspects are used.')}</p>`:''}${ctx.sky?`<p>${esc(tr(`行运取样：${ctx.sky.date} ${ctx.sky.time}，UTC ${ctx.sky.offset>=0?'+':''}${ctx.sky.offset}。这是所选时刻的参考，不是整个阶段的行运概括。`,`Transit sample: ${ctx.sky.date} ${ctx.sky.time}, UTC ${ctx.sky.offset>=0?'+':''}${ctx.sky.offset}. This represents the selected moment, not the whole period.`))}</p>`:''}<p>${tr('对应依据取自 Agrippa《隐秘哲学》第一卷；将古代香材对应应用于现代香水香调的评分与权重由 Pronoia 制定。未公开的香调不补猜，香调名称不等于实际植物成分。','Correspondences follow Agrippa’s Three Books of Occult Philosophy, Book I. Pronoia defines the scoring and weights that apply these to modern perfume notes. Undisclosed notes are not guessed; note names do not establish actual plant ingredients.')}</p>${link(C.ASTRO.SOURCE,tr('查看香材对应原文 · I.44','Material correspondences · I.44'))} · ${link(C.ASTRO.HOUSE_SOURCE,tr('查看传统宫位主题','Traditional house themes'))}</div>`;
+ return `<div class="detail-section astrology-detail"><h3>${tr('这张星盘，如何走向这缕香气','From your chart to this scent')}</h3>${interpretationDetails(result)}<h4>${tr('实际命中的香材线索','Matched material correspondences')}</h4>${matches.length?`<ol>${matches.map(m=>`<li>${esc(astrologyReason(m))}</li>`).join('')}</ol>`:`<p>${tr('这款香水没有公开香调命中所用传统对应。','Its published notes do not match the selected traditional correspondences.')}</p>`}${aspects.length?`<p>${tr('与这款香气线索相关的本命相位：','Natal aspects relevant to this scent’s correspondences: ')}${aspects.map(a=>esc(tr(planetName(a.a)+a.zh+planetName(a.b),planetName(a.a)+' '+a.en+' '+planetName(a.b))+` (${a.orb.toFixed(1)}°)`)).join('；')}</p>`:''}<p>${ctx.chart.complete?tr('使用热带黄道、地心星位、传统七曜与整宫制；金星、月亮、太阳及命主星参与本命香气选择。','Uses the tropical zodiac, geocentric positions, seven traditional planets and whole-sign houses. Venus, Moon, Sun and the chart ruler shape the natal selection.'):tr('出生时间未补全：仅按太阳星座及其守护星选香，不推定月亮、金星、上升或宫位。','Birth time is incomplete: only the Sun sign and its ruler are used for the natal match. Moon, Venus, rising sign and houses are not inferred.')}</p>${ctx.chart.complete&&!ctx.chart.asc?`<p>${tr('该出生纬度不计算上升与宫位，只使用七曜星位及相位。','At this birth latitude, rising sign and houses are omitted; only planetary positions and aspects are used.')}</p>`:''}${ctx.sky?`<p>${esc(tr(`行运取样：${ctx.sky.date} ${ctx.sky.time}，UTC ${ctx.sky.offset>=0?'+':''}${ctx.sky.offset}。这是所选时刻的参考，不是整个阶段的行运概括。`,`Transit sample: ${ctx.sky.date} ${ctx.sky.time}, UTC ${ctx.sky.offset>=0?'+':''}${ctx.sky.offset}. This represents the selected moment, not the whole period.`))}</p>`:''}<p>${tr('对应依据取自 Agrippa《隐秘哲学》第一卷；将古代香材对应应用于现代香水香调的评分与权重由 Pronoia 制定。未公开的香调不补猜，香调名称不等于实际植物成分。','Correspondences follow Agrippa’s Three Books of Occult Philosophy, Book I. Pronoia defines the scoring and weights that apply these to modern perfume notes. Undisclosed notes are not guessed; note names do not establish actual plant ingredients.')}</p>${link(C.ASTRO.SOURCE,tr('查看香材对应原文 · I.44','Material correspondences · I.44'))} · ${link(C.ASTRO.HOUSE_SOURCE,tr('查看传统宫位主题','Traditional house themes'))}</div>`;
 }
 function card(original,index=0,result=null){
  const p=display(original),owned=state.owned.includes(p.id),notes=C.allNotes(p),tags=p.tags||[];
@@ -987,6 +1082,9 @@ function renderResults(){
  if(!current)return;const {ctx,results,layer}=current,first=results.selected[0],g=first?.goalKey||C.classifyText(ctx.goalText,ctx.goal,'goal'),e=first?.eventKey||C.classifyText(ctx.eventText,ctx.event,'event');
  $('result-count').textContent=String(results.selected.length).padStart(2,'0');
  $('result-context').textContent=[ctx.demo?tr('演示提案','Sample selection'):ctx.chart.uncertain?tr('太阳星座待确认','Sun sign to confirm'):signName(ctx.chart.sun),ctx.level>=2?goal(g):null,ctx.level===3?event(e)+' · '+ctx.eventDate:null,ctx.ownedOnly?tr('从你的 '+state.owned.length+' 款收藏中选择',`From your ${state.owned.length} collected scents`):tr(results.poolCount+' 款符合筛选',`${results.poolCount} eligible scents`),!ctx.useAstro||ctx.chart.uncertain?tr('星盘权重关闭','Astrology weighting off'):ctx.chart.complete?(ctx.chart.asc?tr('本命七曜 · 整宫制','Seven natal planets · whole-sign houses'):tr('本命七曜 · 极区不计算宫位','Seven natal planets · polar houses omitted')):tr('仅太阳 · 补全出生时间可细化','Sun only · add birth time for a full chart'),ctx.sky?tr(`行运参考 ${ctx.sky.date} ${ctx.sky.time} UTC${ctx.sky.offset>=0?'+':''}${ctx.sky.offset}`,`Transit reference ${ctx.sky.date} ${ctx.sky.time} UTC${ctx.sky.offset>=0?'+':''}${ctx.sky.offset}`):null].filter(Boolean).join(' / ');
+ const reading=results.analysis;
+ $('selection-reading').hidden=!reading||!results.selected.length;
+ $('selection-reading').textContent=reading?temperamentText(reading)+(reading.complete&&reading.needs.length?tr(' 本次优先支持：',' Themes prioritised now: ')+reading.needs.slice(0,2).map(n=>functionName(n.body)).join(tr('、',' / ')):''):'';
  $('recommendations').innerHTML=results.selected.length?results.selected.map((r,i)=>card(r.perfume,i,r)).join(''):`<div class="empty-state"><span class="empty-orbit">◌</span><h3>${tr('给恰好的香气，一点空间。','Leave room for the right scent.')}</h3><p>${ctx.ownedOnly?(state.owned.length?tr('收藏中没有符合当前筛选的香水，试试调整存在感或排除香调。','Nothing in your wardrobe matches these filters. Try changing intensity or excluded notes.'):tr('香水柜还是空的。添加你拥有的香水，再来挑选。','Your wardrobe is empty. Add the scents you own, then come back.')):tr('暂时没有匹配的香水，请调整筛选。','No scents match these filters yet. Try a different intensity or fewer excluded notes.')}</p><button class="outline-button" data-go="${ctx.ownedOnly?'wardrobe':'catalog'}">${ctx.ownedOnly?tr('打开香水柜','Open wardrobe'):tr('查看图鉴','Explore the atlas')} ↗</button></div>`;
  $('save-plan').disabled=!results.selected.length;
  if(ctx.allowLayer){let reason='';if(layer){reason=lang==='zh'?layer.reason:layer.official?'A woody, mineral contour meets citrus and aromatic herbs.':layer.shared.length?'A shared thread of '+layer.shared.slice(0,2).map(term).join(' and ')+'.':'A pairing within the same fragrance family.';}
